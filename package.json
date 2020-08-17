@@ -1,0 +1,25 @@
+{
+  "name": "lab",
+  "version": "1.0.0",
+  "description": "failing unit tests for the brand new developer",
+  "main": "index.js",
+  "dependencies": {
+    "chai": "^4.2.0"
+  },
+  "devDependencies": {
+    "mocha": "^8.1.1"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ca0v/node-lab.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ca0v/node-lab/issues"
+  },
+  "homepage": "https://github.com/ca0v/node-lab#readme"
+}
