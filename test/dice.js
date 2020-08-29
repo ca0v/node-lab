@@ -1,5 +1,36 @@
 var assert = require("chai").assert;
 
+function strip(value) {
+    if (value == "-_") return "_"
+    return (value.substring(0, 2) === "--") ? value.substring(2) : value;
+}
+
+function asCode(tail) {
+    return tail.charCodeAt(0) - "♿".charCodeAt(0)
+}
+
+function increment(value) {
+    if (value == "_") return "⚀"
+    if (value == "") return "⚀"
+    if (value[0] == "-") return strip("-" + decrement(value.substring(1)));
+    const head = value.substring(0, value.length - 1)
+    const tail = value.substring(value.length - 1)
+    if (tail == "⚅") return increment(head) + "⚀"
+    return head + dice(1 + asCode(tail))
+}
+
+function decrement(value) {
+    if (value == "⚀") return "_"
+    if (value == "") return "-⚀"
+    if (value == "_") return "-⚀"
+    if (value[0] == "-") return strip("-" + increment(value.substring(1)));
+
+    const head = value.substring(0, value.length - 1)
+    const tail = value.substring(value.length - 1)
+    if (tail == "⚀") return decrement(head) + "⚅"
+    return head + dice(asCode(tail) - 1)
+}
+
 function dice(value) {
     if (0 == value) return "_";
     const ones = 1 + (value - 1) % 6
@@ -40,23 +71,28 @@ describe("print die", () => {
     })
 
     it("increments the dice", () => {
-        assert.equal(increment("_"), "⚀")
+        assert.equal(increment(""), "⚀")
         assert.equal(increment("⚀"), "⚁")
+        assert.equal(increment("-⚀"), "_")
         assert.equal(increment("⚁"), "⚂")
         assert.equal(increment("⚂"), "⚃")
         assert.equal(increment("⚃"), "⚄")
         assert.equal(increment("⚄"), "⚅")
         assert.equal(increment("⚅"), "⚀⚀")
         assert.equal(increment("⚀⚀"), "⚀⚁")
+        assert.equal(increment("-⚂"), "-⚁")
     })
 
-    function increment(value) {
-        if (value == "_") return "⚀"
-        if (value == "") return "⚀"
-        const head = value.substring(0, value.length - 1)
-        const tail = value.substring(value.length - 1)
-        if (tail == "⚅") return increment(head) + "⚀"
-        let code = 1 + tail.charCodeAt(0) - 9855
-        return head + dice(code)
-    }
+    it("decrements the dice", () => {
+        assert.equal(decrement(""), "-⚀")
+        assert.equal(decrement("_"), "-⚀")
+        assert.equal(decrement("⚀"), "_")
+        assert.equal(decrement("⚁"), "⚀")
+        assert.equal(decrement("⚂"), "⚁")
+        assert.equal(decrement("-⚂"), "-⚃")
+        assert.equal(decrement("--⚂"), "⚁")
+        assert.equal(decrement("------⚂"), "⚁")
+        assert.equal(decrement("-----⚂"), "-⚃")
+        assert.equal(decrement("----⚂"), "⚁")
+    })
 })
