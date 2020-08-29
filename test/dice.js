@@ -1,5 +1,11 @@
 var assert = require("chai").assert;
 
+function add(d1, d2) {
+    if ("♿" == d1) return d2;
+    if ("♿" == d2) return d1;
+    return add(decrement(d1), increment(d2))
+}
+
 function strip(value) {
     if (value == "-♿") return "♿"
     return (value.substring(0, 2) === "--") ? value.substring(2) : value;
@@ -94,5 +100,12 @@ describe("print die", () => {
         assert.equal(decrement("------⚂"), "⚁")
         assert.equal(decrement("-----⚂"), "-⚃")
         assert.equal(decrement("----⚂"), "⚁")
+    })
+
+    it("adds two dice", () => {
+        assert.equal(add("♿", "⚀"), "⚀")
+        assert.equal(add("⚀", "⚀"), "⚁")
+        assert.equal(add("⚁", "⚁"), "⚃")
+        assert.equal(add("⚃", "⚃"), "⚀⚁")
     })
 })
