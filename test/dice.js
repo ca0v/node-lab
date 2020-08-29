@@ -1,14 +1,33 @@
 var assert = require("chai").assert;
 
+function mult(d1, d2) {
+    console.log("mult", d1, d2)
+    if ("♿" == d1) return "♿"
+    if ("♿" == d2) return "♿"
+    let answer = d2
+    let i = 5
+    while (d1 !== "⚀" && i--) {
+        d1 = decrement(d1)
+        answer = add(d2, answer)
+    }
+    return answer
+}
+
 function add(d1, d2) {
-    if ("♿" == d1) return d2;
-    if ("♿" == d2) return d1;
+    console.log("add", d1, d2)
+    if ("♿" == d1) return d2
+    if ("♿" == d2) return d1
     return add(decrement(d1), increment(d2))
 }
 
 function strip(value) {
     if (value == "-♿") return "♿"
     return (value.substring(0, 2) === "--") ? value.substring(2) : value;
+}
+
+function stripZero(value) {
+    if (value[0] == "♿") return value.substring(1)
+    return value
 }
 
 function asCode(tail) {
@@ -33,7 +52,7 @@ function decrement(value) {
 
     const head = value.substring(0, value.length - 1)
     const tail = value.substring(value.length - 1)
-    if (tail == "⚀") return decrement(head) + "⚅"
+    if (tail == "⚀") return stripZero(decrement(head)) + "⚅"
     return head + dice(asCode(tail) - 1)
 }
 
@@ -93,6 +112,7 @@ describe("print die", () => {
         assert.equal(decrement(""), "-⚀")
         assert.equal(decrement("♿"), "-⚀")
         assert.equal(decrement("⚀"), "♿")
+        assert.equal(decrement("⚀⚀"), "⚅")
         assert.equal(decrement("⚁"), "⚀")
         assert.equal(decrement("⚂"), "⚁")
         assert.equal(decrement("-⚂"), "-⚃")
@@ -107,5 +127,16 @@ describe("print die", () => {
         assert.equal(add("⚀", "⚀"), "⚁")
         assert.equal(add("⚁", "⚁"), "⚃")
         assert.equal(add("⚃", "⚃"), "⚀⚁")
+    })
+
+
+    it("multiply two dice", () => {
+        assert.equal(mult("♿", "⚀"), "♿")
+        assert.equal(mult("⚀", "♿"), "♿")
+        assert.equal(mult("⚀", "⚀"), "⚀")
+        assert.equal(mult("⚀", "⚁"), "⚁")
+        assert.equal(mult("⚁", "⚁"), "⚃")
+        assert.equal(mult("⚂", "⚁"), "⚅")
+        assert.equal(mult("⚃", "⚃"), "⚁⚃")
     })
 })

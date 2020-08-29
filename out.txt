@@ -1,0 +1,48 @@
+
+> lab@1.0.0 test C:\code\node-lab
+> mocha -w -R Min --bail true
+
+[?25l[2J[1;3Hadd ♿ ⚀
+add ⚀ ⚀
+add ♿ ⚁
+add ⚁ ⚁
+add ⚀ ⚂
+add ♿ ⚃
+add ⚃ ⚃
+add ⚂ ⚄
+add ⚁ ⚅
+add ⚀ ⚀⚀
+add ♿ ⚀⚁
+mult ♿ ⚀
+mult ⚀ ♿
+mult ⚀ ⚀
+mult ⚀ ⚁
+mult ⚁ ⚁
+add ⚁ ⚁
+add ⚀ ⚂
+add ♿ ⚃
+mult ⚂ ⚁
+add ⚁ ⚁
+add ⚀ ⚂
+add ♿ ⚃
+add ⚁ ⚃
+add ⚀ ⚄
+add ♿ ⚅
+mult ⚃ ⚃
+add ⚃ ⚃
+add ⚂ ⚄
+add ⚁ ⚅
+add ⚀ ⚀⚀
+add ♿ ⚀⚁
+add ⚃ ⚀⚁
+add ⚂ ⚀⚂
+add ⚁ ⚀⚃
+add ⚀ ⚀⚄
+add ♿ ⚀⚅
+add ⚃ ⚀⚅
+add ⚂ ⚁⚀
+add ⚁ ⚁⚁
+add ⚀ ⚁⚂
+add ♿ ⚁⚃
+
+  19 passing (7ms)
