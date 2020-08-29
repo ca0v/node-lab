@@ -1,7 +1,7 @@
 var assert = require("chai").assert;
 
 function strip(value) {
-    if (value == "-_") return "_"
+    if (value == "-♿") return "♿"
     return (value.substring(0, 2) === "--") ? value.substring(2) : value;
 }
 
@@ -10,7 +10,7 @@ function asCode(tail) {
 }
 
 function increment(value) {
-    if (value == "_") return "⚀"
+    if (value == "♿") return "⚀"
     if (value == "") return "⚀"
     if (value[0] == "-") return strip("-" + decrement(value.substring(1)));
     const head = value.substring(0, value.length - 1)
@@ -20,9 +20,9 @@ function increment(value) {
 }
 
 function decrement(value) {
-    if (value == "⚀") return "_"
+    if (value == "⚀") return "♿"
     if (value == "") return "-⚀"
-    if (value == "_") return "-⚀"
+    if (value == "♿") return "-⚀"
     if (value[0] == "-") return strip("-" + increment(value.substring(1)));
 
     const head = value.substring(0, value.length - 1)
@@ -32,7 +32,7 @@ function decrement(value) {
 }
 
 function dice(value) {
-    if (0 == value) return "_";
+    if (0 == value) return "♿";
     const ones = 1 + (value - 1) % 6
     const six = (value - ones) / 6
     return (six ? dice(six) : "") + String.fromCharCode(ones + 9855)
@@ -46,7 +46,7 @@ function stringToDice(name) {
 
 describe("print die", () => {
     it("prints 1", () => {
-        assert.equal("_", dice(0))
+        assert.equal("♿", dice(0))
         assert.equal("⚀", dice(1))
         assert.equal("⚁", dice(2))
         assert.equal("⚂", dice(3))
@@ -73,7 +73,7 @@ describe("print die", () => {
     it("increments the dice", () => {
         assert.equal(increment(""), "⚀")
         assert.equal(increment("⚀"), "⚁")
-        assert.equal(increment("-⚀"), "_")
+        assert.equal(increment("-⚀"), "♿")
         assert.equal(increment("⚁"), "⚂")
         assert.equal(increment("⚂"), "⚃")
         assert.equal(increment("⚃"), "⚄")
@@ -85,8 +85,8 @@ describe("print die", () => {
 
     it("decrements the dice", () => {
         assert.equal(decrement(""), "-⚀")
-        assert.equal(decrement("_"), "-⚀")
-        assert.equal(decrement("⚀"), "_")
+        assert.equal(decrement("♿"), "-⚀")
+        assert.equal(decrement("⚀"), "♿")
         assert.equal(decrement("⚁"), "⚀")
         assert.equal(decrement("⚂"), "⚁")
         assert.equal(decrement("-⚂"), "-⚃")
