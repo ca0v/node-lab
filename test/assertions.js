@@ -42,7 +42,8 @@ describe("math ops", () => {
     })
 
     it("subtract numbers", () => {
-        const a = b = 50
+        const a = 50
+        const b = 50
         const x = a - b // change operator to -
         chai.assert.equal(x, 0)
     })
