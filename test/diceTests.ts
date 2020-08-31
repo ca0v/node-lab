@@ -1,7 +1,5 @@
-declare var require: any;
-var assert = require("chai").assert;
-declare var describe: any;
-declare var it: any;
+import { assert } from "chai";
+import { describe, it } from "mocha";
 import { Calculator } from "../app/Calculator.js";
 
 describe("print die", () => {
