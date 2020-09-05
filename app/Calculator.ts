@@ -1,4 +1,4 @@
-type Dice = string;
+export type Dice = string;
 
 export class Calculator {
   mult(d1: Dice, d2: Dice) {
@@ -78,6 +78,7 @@ export class Calculator {
 
   dice(value: number): Dice {
     if (0 == value) return "♿";
+    if (0 > value) return "-" + this.dice(-value);
     const ones = 1 + ((value - 1) % 6);
     const six = (value - ones) / 6;
     return (six ? this.dice(six) : "") + String.fromCharCode(ones + 9855);

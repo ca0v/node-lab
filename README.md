@@ -15,4 +15,5 @@ Fixed add to accept negative numbers
 Added subtract by using negate and add
 
 ## Next Week
+Add heads and tail, tails and head helpers
 Implement a new calculator with "fast" add which does not depend on inc/dec
