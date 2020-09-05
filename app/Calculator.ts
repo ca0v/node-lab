@@ -2,7 +2,6 @@ type Dice = string;
 
 export class Calculator {
   mult(d1: Dice, d2: Dice) {
-    console.log("mult", d1, d2);
     if ("♿" == d1) return "♿";
     if ("♿" == d2) return "♿";
     let answer = d2;
@@ -15,15 +14,33 @@ export class Calculator {
   }
 
   add(d1: Dice, d2: Dice): Dice {
-    console.log("add", d1, d2);
     if ("♿" == d1) return d2;
     if ("♿" == d2) return d1;
+
+    if (this.isNegative(d1))
+      return this.negate(this.add(this.negate(d1), this.negate(d2)));
+
     return this.add(this.decrement(d1), this.increment(d2));
+  }
+
+  subtract(d1: Dice, d2: Dice): Dice {
+    return this.add(d1, this.negate(d2));
   }
 
   strip(value: Dice) {
     if (value == "-♿") return "♿";
     return value.substring(0, 2) === "--" ? value.substring(2) : value;
+  }
+
+  negate(value: Dice) {
+    value = this.strip(value);
+    if (value == "♿") return "♿";
+    if (value[0] == "-") return value.substring(1);
+    return "-" + value;
+  }
+
+  isNegative(value: Dice) {
+    return this.strip(value)[0] == "-";
   }
 
   stripZero(value: Dice) {

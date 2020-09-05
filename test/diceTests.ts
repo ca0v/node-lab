@@ -4,7 +4,7 @@ import { Calculator } from "../app/Calculator.js";
 
 describe("print die", () => {
   const calculator = new Calculator();
-  it("prints 1", () => {
+  it("dice tests", () => {
     assert.equal("♿", calculator.dice(0));
     assert.equal("⚀", calculator.dice(1));
     assert.equal("⚁", calculator.dice(2));
@@ -59,11 +59,37 @@ describe("print die", () => {
     assert.equal(calculator.decrement("----⚂"), "⚁");
   });
 
+  it("negates dice", () => {
+    assert.equal(calculator.negate("♿"), "♿");
+    assert.equal(calculator.negate("-♿"), "♿");
+    assert.equal(calculator.negate("⚀"), "-⚀");
+    assert.equal(calculator.negate("-⚀"), "⚀");
+    assert.equal(calculator.negate("--⚀"), "-⚀");
+  });
+
+  it("is negative test", () => {
+    assert.isFalse(calculator.isNegative("♿"));
+    assert.isFalse(calculator.isNegative("-♿"));
+    assert.isTrue(calculator.isNegative("-⚀"));
+    assert.isFalse(calculator.isNegative("⚀"));
+  });
+
   it("adds two dice", () => {
     assert.equal(calculator.add("♿", "⚀"), "⚀");
     assert.equal(calculator.add("⚀", "⚀"), "⚁");
     assert.equal(calculator.add("⚁", "⚁"), "⚃");
     assert.equal(calculator.add("⚃", "⚃"), "⚀⚁");
+    assert.equal(calculator.add("⚃", "-⚃"), "♿");
+    assert.equal(calculator.add("-⚃", "⚃"), "♿");
+  });
+
+  it("subtracts two dice", () => {
+    assert.equal(calculator.subtract("♿", "⚀"), "-⚀");
+    assert.equal(calculator.subtract("⚀", "⚀"), "♿");
+    assert.equal(calculator.subtract("⚁", "⚁"), "♿");
+    assert.equal(calculator.subtract("⚃", "⚃"), "♿");
+    assert.equal(calculator.subtract("⚃", "-⚃"), "⚀⚁");
+    assert.equal(calculator.subtract("-⚃", "⚃"), "-⚀⚁");
   });
 
   it("multiply two dice", () => {
@@ -74,5 +100,6 @@ describe("print die", () => {
     assert.equal(calculator.mult("⚁", "⚁"), "⚃");
     assert.equal(calculator.mult("⚂", "⚁"), "⚅");
     assert.equal(calculator.mult("⚃", "⚃"), "⚁⚃");
+    assert.equal(calculator.mult("⚃", "-⚃"), "-⚁⚃");
   });
 });
