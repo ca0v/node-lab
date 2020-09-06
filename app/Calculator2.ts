@@ -1,6 +1,15 @@
 import { Calculator as BaseCalc, Dice } from "./Calculator";
 
 export class Calculator extends BaseCalc {
+  fromDice(d1: Dice): number {
+    if (d1 === "") return 0;
+    if (this.isNegative(d1)) return -this.fromDice(this.negate(d1));
+
+    const tail = this.tail(d1);
+    const heads = this.heads(d1);
+    return tail.charCodeAt(0) - "♿".charCodeAt(0) + 6 * this.fromDice(heads);
+  }
+
   sign(d1: Dice): "" | "-" {
     return this.isNegative(d1) ? "-" : "";
   }
@@ -27,19 +36,16 @@ export class Calculator extends BaseCalc {
     return tails.join("");
   }
 
-  private slow_add(d1: Dice, d2: Dice): Dice {
-    if ("♿" == d1) return d2;
-    if ("♿" == d2) return d1;
-
-    if (this.isNegative(d1))
-      return this.negate(this.slow_add(this.negate(d1), this.negate(d2)));
-
-    return this.slow_add(this.decrement(d1), this.increment(d2));
+  slow_add(d1: Dice, d2: Dice): Dice {
+    return this.dice(this.fromDice(d1) + this.fromDice(d2));
   }
 
   add2(d1: Dice, d2: Dice): Dice {
     if ("♿" == d1) return d2;
     if ("♿" == d2) return d1;
+
+    if ("" == d1) return d2;
+    if ("" == d2) return d1;
 
     const tail1 = this.tail(d1);
     const tail2 = this.tail(d2);
@@ -50,9 +56,12 @@ export class Calculator extends BaseCalc {
 
     const heads1 = this.heads(d1);
     const heads2 = this.heads(d2);
-    const columnTwoSum = this.add(heads1, heads2);
-    return (
-      this.slow_add(columnOnePlaceCarryOver, columnTwoSum) + columnOnePlaceValue
-    );
+    const columnTwoSum = this.add2(heads1, heads2);
+
+    const result =
+      this.slow_add(columnOnePlaceCarryOver, columnTwoSum) +
+      columnOnePlaceValue;
+
+    return this.stripZero(result);
   }
 }

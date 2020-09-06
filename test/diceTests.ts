@@ -126,9 +126,19 @@ describe("print die", () => {
   });
 
   it("add 2.0 tests", () => {
-    assert.equal(c.add2(c.dice(1), c.dice(1)), c.dice(2));
+    assert.equal(c.add2(c.dice(1), c.dice(1)), c.dice(2), "here we are");
+
     for (let i = 1; i <= 4000; i++) {
-      assert.equal(c.add2(c.dice(i), c.dice(i)), c.dice(2 * i));
+      assert.equal(c.add2(c.dice(i), c.dice(i)), c.dice(2 * i), i + "");
+    }
+  });
+
+  it("fromDice tests", () => {
+    assert.equal(c.fromDice("⚃"), 4);
+    assert.equal(c.fromDice("⚁⚃"), 16);
+    assert.equal(c.fromDice("-⚁⚃"), -16);
+    for (let i = 1; i <= 4000; i++) {
+      assert.equal(c.fromDice(c.dice(i)), i, i + "");
     }
   });
 });

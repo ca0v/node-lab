@@ -14,6 +14,15 @@ Moved methods into a calculator class
 Fixed add to accept negative numbers
 Added subtract by using negate and add
 
-## Next Week
+## Week 4
 Add heads and tail, tails and head helpers
 Implement a new calculator with "fast" add which does not depend on inc/dec
+
+## Next
+Rename add2 to add and ensure it passes all tests
+
+## Future
+Implement fast multiply on Calculator2
+Implement divide
+Implement decimal point support
+
